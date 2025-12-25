@@ -15,6 +15,7 @@ Automatically retrieves design system prompts to create visually distinctive, pr
 > **Note**: Design system prompts are sourced from [designprompts.dev](https://designprompts.dev) - a curated collection of high-quality design system templates.
 
 **Design Systems Include:**
+
 - **Modern**: Modern Dark, SaaS, Material, Claymorphism, Neumorphism
 - **Minimal**: Swiss, Bauhaus, Flat Design, Monochrome, Minimal Dark
 - **Creative**: Neo-brutalism, Bold Typography, Maximalism, Sketch, Playful Geometric
@@ -28,6 +29,7 @@ Automatically retrieves design system prompts to create visually distinctive, pr
 - **Raw**: Industrial
 
 **Key Features:**
+
 - 30+ production-ready design systems
 - Automatic style detection from user intent
 - Framework-agnostic (React, Vue, Next.js, etc.)
@@ -36,6 +38,7 @@ Automatically retrieves design system prompts to create visually distinctive, pr
 - Anti-pattern guidelines to maintain authenticity
 
 **Example Usage:**
+
 ```
 "Create a landing page with neo-brutalist design"
 "Build a SaaS dashboard with modern dark theme"
@@ -47,34 +50,57 @@ Automatically retrieves design system prompts to create visually distinctive, pr
 
 ## Installation
 
-### From Marketplace
+### From Marketplace (Recommended)
 
-```bash
-cc --plugin install OhMySkills
-```
+1. In Claude Code, run the command:
+
+   ```
+   /plugin
+   ```
+
+2. Navigate to **Marketplaces**
+3. Click **Add Marketplace**
+4. Enter the repository URL:
+
+   ```
+   git@github.com:NakanoSanku/OhMySkills.git
+   ```
+
+   Or use Github:
+
+   ```
+   NakanoSanku/OhMySkills
+   ```
+
+   Or more...
+
+5. Browse and select the skills you want to install
+6. Install selected skills - they will be immediately available in your Claude Code sessions
 
 ### Manual Installation
 
+If you prefer to install manually:
+
 1. Clone this repository:
+
 ```bash
 git clone https://github.com/NakanoSanku/OhMySkills.git
 cd OhMySkills
 ```
 
 2. Link the plugin directory to Claude Code:
+
 ```bash
 cc --plugin-dir /path/to/OhMySkills/.claude-plugin
 ```
 
-### Using Specific Skills
+### Using Specific Skills in Settings
 
-To use individual skills, reference them in your `.claude/settings.json`:
+To configure skills in your `.claude/settings.json`:
 
 ```json
 {
-  "plugins": [
-    "/path/to/OhMySkills/.claude-plugin"
-  ]
+  "plugins": ["/path/to/OhMySkills/.claude-plugin"]
 }
 ```
 
@@ -83,12 +109,14 @@ To use individual skills, reference them in your `.claude/settings.json`:
 Once installed, skills are automatically available in your Claude Code sessions. Simply describe what you want to build, and Claude will invoke the appropriate skill:
 
 **Frontend Development:**
+
 ```
 User: "Build a landing page with modern dark aesthetic"
 Claude: [Automatically invokes design-style skill with ModernDark design system]
 ```
 
 **Component Creation:**
+
 ```
 User: "Create a contact form with neo-brutalist style"
 Claude: [Applies Neo-brutalism design patterns and tokens]
