@@ -1,0 +1,30 @@
+{
+  "name": "design-style",
+  "version": "1.0.0",
+  "description": "Automatically retrieves design system prompts to create visually distinctive, production-grade frontend code with 30+ specific design styles like Neo-brutalism, Modern Dark, Cyberpunk, Luxury, and more.",
+  "author": {
+    "name": "OhMySkills",
+    "url": "https://github.com/NakanoSanku/OhMySkills"
+  },
+  "homepage": "https://github.com/NakanoSanku/OhMySkills/tree/main/design-style",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NakanoSanku/OhMySkills.git",
+    "directory": "design-style"
+  },
+  "license": "MIT",
+  "keywords": [
+    "frontend",
+    "ui",
+    "design-systems",
+    "react",
+    "vue",
+    "tailwind",
+    "css",
+    "web-development",
+    "neo-brutalism",
+    "modern-dark",
+    "luxury",
+    "cyberpunk"
+  ]
+}
