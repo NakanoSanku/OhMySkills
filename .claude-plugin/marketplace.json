@@ -1,0 +1,95 @@
+{
+  "skills": [
+    {
+      "id": "design-style",
+      "name": "Design Style Skill",
+      "version": "1.0.0",
+      "description": "Automatically retrieves design system prompts to create visually distinctive, production-grade frontend code with 30+ specific design styles like Neo-brutalism, Modern Dark, Cyberpunk, Luxury, and more.",
+      "author": "OhMySkills",
+      "category": "Frontend Development",
+      "tags": [
+        "frontend",
+        "ui",
+        "design-systems",
+        "react",
+        "tailwind",
+        "css",
+        "web-development"
+      ],
+      "path": "../design-style",
+      "skillFile": "SKILL.md",
+      "icon": "🎨",
+      "longDescription": "This skill helps Claude Code create beautiful, distinctive frontend interfaces by automatically retrieving design system prompts. Instead of producing generic UI, this skill enables Claude to build interfaces with specific design aesthetics.\n\n**Available Design Styles (30+):**\n- **Modern**: Modern Dark, SaaS, Material, Claymorphism, Neumorphism\n- **Minimal**: Swiss, Bauhaus, Flat Design, Monochrome, Minimal Dark\n- **Creative**: Neo-brutalism, Bold Typography, Maximalism, Sketch, Playful Geometric\n- **Professional**: Enterprise, Professional\n- **Elegant**: Luxury, Art Deco, Academia\n- **Tech**: Terminal CLI, Web3, Cyberpunk\n- **Organic**: Botanical, Organic\n- **Nostalgic**: Retro, Vaporwave\n- **Editorial**: Newsprint\n- **Dynamic**: Kinetic\n- **Raw**: Industrial\n\n**Key Features:**\n- 30+ production-ready design systems\n- Automatic style detection from user intent\n- Framework-agnostic (React, Vue, Next.js, etc.)\n- Detailed design tokens (colors, typography, spacing)\n- Component patterns and implementation examples\n- Anti-pattern guidelines to maintain authenticity\n\n**When It's Invoked:**\n- Building web pages, landing pages, or web applications\n- Creating UI components with specific design styles\n- Frontend development with React, Vue, or other frameworks\n- When user mentions specific aesthetics (e.g., \"modern dark\", \"brutalist\")\n\n**Example Usage:**\n- \"Create a landing page with neo-brutalist design\"\n- \"Build a SaaS dashboard with modern dark theme\"\n- \"Add a contact form with cyberpunk aesthetic\"\n- \"Design a portfolio with Swiss minimalism\"",
+      "requirements": {
+        "claudeCodeVersion": ">=0.1.0"
+      },
+      "allowedTools": [
+        "Read",
+        "Glob",
+        "Grep"
+      ],
+      "resources": {
+        "prompts": {
+          "path": "prompts",
+          "count": 30,
+          "description": "Design system prompt files"
+        },
+        "mapping": {
+          "path": "styles-mapping.json",
+          "description": "Style metadata and recommendations"
+        }
+      },
+      "examples": [
+        {
+          "title": "Neo-brutalist Landing Page",
+          "description": "Create a bold landing page with neo-brutalist design",
+          "userPrompt": "Create a landing page for my SaaS product with a neo-brutalist design"
+        },
+        {
+          "title": "Modern Dark Dashboard",
+          "description": "Build a sophisticated dark-themed dashboard",
+          "userPrompt": "Build a dashboard with modern dark aesthetic for my analytics app"
+        },
+        {
+          "title": "Luxury E-commerce Site",
+          "description": "Design a premium shopping experience",
+          "userPrompt": "Create a product page with luxury design for high-end jewelry"
+        },
+        {
+          "title": "Terminal CLI Interface",
+          "description": "Build a developer tool with terminal aesthetic",
+          "userPrompt": "Make a CLI-style interface for my developer tool"
+        }
+      ],
+      "bestFor": [
+        "Building landing pages",
+        "Creating UI component libraries",
+        "Designing SaaS dashboards",
+        "Portfolio websites",
+        "E-commerce sites",
+        "Developer tools",
+        "Creative agency sites"
+      ],
+      "screenshots": [],
+      "documentation": {
+        "readme": "SKILL.md",
+        "reference": "reference.md"
+      },
+      "stats": {
+        "totalStyles": 30,
+        "categories": 12,
+        "lastUpdated": "2025-12-25"
+      },
+      "links": {
+        "repository": "https://github.com/NakanoSanku/OhMySkills/blob/main/design-style",
+        "documentation": "https://github.com/NakanoSanku/OhMySkills/blob/main/design-style/SKILL.md"
+      }
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-12-25",
+    "totalSkills": 1,
+    "description": "OhMySkills marketplace for Claude Code skills"
+  }
+}
