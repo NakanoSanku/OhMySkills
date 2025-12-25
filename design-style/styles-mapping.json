@@ -1,0 +1,328 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Design style mapping for Claude Code design-style skill",
+    "totalStyles": 30,
+    "lastUpdated": "2025-12-25"
+  },
+  "styles": [
+    {
+      "id": "academia",
+      "name": "Academia",
+      "file": "Academia.md",
+      "category": "Elegant",
+      "keywords": ["scholarly", "classic", "refined", "educational", "academic", "university"],
+      "vibe": "Scholarly, classic, refined",
+      "bestFor": ["Educational platforms", "Publishing", "Research tools"]
+    },
+    {
+      "id": "artdeco",
+      "name": "Art Deco",
+      "file": "ArtDeco.md",
+      "category": "Elegant",
+      "keywords": ["luxury", "1920s", "glamour", "art deco", "vintage luxury"],
+      "vibe": "Luxurious 1920s glamour",
+      "bestFor": ["Luxury brands", "Hotels", "Premium services"]
+    },
+    {
+      "id": "bauhaus",
+      "name": "Bauhaus",
+      "file": "Bauhaus.md",
+      "category": "Minimal",
+      "keywords": ["functionalist", "geometric", "minimal", "bauhaus", "modernist"],
+      "vibe": "Functionalist, geometric minimalism",
+      "bestFor": ["Design tools", "Architecture sites", "Minimalist brands"]
+    },
+    {
+      "id": "boldtypography",
+      "name": "Bold Typography",
+      "file": "BoldTypography.md",
+      "category": "Creative",
+      "keywords": ["type-driven", "typography", "bold fonts", "text-heavy", "editorial"],
+      "vibe": "Type-driven design",
+      "bestFor": ["Content platforms", "Editorial sites", "Typography showcases"]
+    },
+    {
+      "id": "botanical",
+      "name": "Botanical",
+      "file": "Botanical.md",
+      "category": "Organic",
+      "keywords": ["nature", "plants", "botanical", "natural", "green", "eco"],
+      "vibe": "Nature-inspired, organic",
+      "bestFor": ["Health & wellness", "Eco-friendly brands", "Garden centers"]
+    },
+    {
+      "id": "claymorphism",
+      "name": "Claymorphism",
+      "file": "Claymorphism.md",
+      "category": "Modern",
+      "keywords": ["clay", "3d", "soft", "playful", "tactile", "claymorphism"],
+      "vibe": "Soft, clay-like 3D elements",
+      "bestFor": ["Creative agencies", "Kids apps", "Playful brands"]
+    },
+    {
+      "id": "cyberpunk",
+      "name": "Cyberpunk",
+      "file": "Cyberpunk.md",
+      "category": "Futuristic",
+      "keywords": ["futuristic", "neon", "cyber", "sci-fi", "high-tech", "dystopian"],
+      "vibe": "Futuristic, neon, high-tech",
+      "bestFor": ["Gaming", "Tech products", "Virtual events"]
+    },
+    {
+      "id": "enterprise",
+      "name": "Enterprise",
+      "file": "Enterprise.md",
+      "category": "Professional",
+      "keywords": ["corporate", "professional", "scalable", "business", "enterprise", "b2b"],
+      "vibe": "Professional, corporate, scalable",
+      "bestFor": ["B2B SaaS", "Corporate sites", "Enterprise software"]
+    },
+    {
+      "id": "flatdesign",
+      "name": "Flat Design",
+      "file": "FlatDesign.md",
+      "category": "Minimal",
+      "keywords": ["flat", "2d", "minimal", "clean", "simple", "modern"],
+      "vibe": "Clean, minimal, 2D",
+      "bestFor": ["Mobile apps", "Dashboards", "Simple interfaces"]
+    },
+    {
+      "id": "industrial",
+      "name": "Industrial",
+      "file": "Industrial.md",
+      "category": "Raw",
+      "keywords": ["raw", "mechanical", "industrial", "utilitarian", "factory"],
+      "vibe": "Raw, mechanical, utilitarian",
+      "bestFor": ["Manufacturing", "Construction", "Industrial brands"]
+    },
+    {
+      "id": "kinetic",
+      "name": "Kinetic",
+      "file": "Kinetic.md",
+      "category": "Dynamic",
+      "keywords": ["motion", "animated", "dynamic", "kinetic", "movement", "interactive"],
+      "vibe": "Dynamic, motion-focused",
+      "bestFor": ["Creative portfolios", "Event sites", "Interactive experiences"]
+    },
+    {
+      "id": "luxury",
+      "name": "Luxury",
+      "file": "Luxury.md",
+      "category": "Elegant",
+      "keywords": ["premium", "elegant", "luxury", "high-end", "sophisticated"],
+      "vibe": "Premium, elegant, sophisticated",
+      "bestFor": ["Luxury brands", "High-end retail", "Premium services"]
+    },
+    {
+      "id": "material",
+      "name": "Material",
+      "file": "Material.md",
+      "category": "Modern",
+      "keywords": ["material design", "google", "android", "cards", "elevation"],
+      "vibe": "Google Material Design",
+      "bestFor": ["Android apps", "Google-ecosystem tools", "Modern dashboards"]
+    },
+    {
+      "id": "maximalism",
+      "name": "Maximalism",
+      "file": "Maximalism.md",
+      "category": "Creative",
+      "keywords": ["bold", "expressive", "abundant", "colorful", "dense", "maximalist"],
+      "vibe": "Bold, expressive, abundant",
+      "bestFor": ["Creative agencies", "Art platforms", "Bold brands"]
+    },
+    {
+      "id": "minimaldrak",
+      "name": "Minimal Dark",
+      "file": "MinimalDrak.md",
+      "category": "Minimal",
+      "keywords": ["minimal", "dark", "clean dark", "simple dark theme"],
+      "vibe": "Minimal dark theme",
+      "bestFor": ["Developer tools", "Code editors", "Minimal apps"]
+    },
+    {
+      "id": "moderndark",
+      "name": "Modern Dark",
+      "file": "ModernDark.md",
+      "category": "Modern",
+      "keywords": ["modern", "dark", "contemporary", "sophisticated", "cinematic", "linear", "vercel"],
+      "vibe": "Contemporary dark UI with depth",
+      "bestFor": ["SaaS products", "Developer tools", "Modern apps"]
+    },
+    {
+      "id": "monochrome",
+      "name": "Monochrome",
+      "file": "Monochrome.md",
+      "category": "Minimal",
+      "keywords": ["black and white", "monochrome", "high contrast", "minimal color"],
+      "vibe": "Black and white, high contrast",
+      "bestFor": ["Photography", "Portfolios", "Editorial"]
+    },
+    {
+      "id": "neobrutalism",
+      "name": "Neo-brutalism",
+      "file": "Neo-brutalism.md",
+      "category": "Creative",
+      "keywords": ["brutalist", "raw", "bold", "thick borders", "hard shadows", "rebellious"],
+      "vibe": "Bold, raw, colorful brutalism",
+      "bestFor": ["Creative studios", "Startups", "Bold brands"]
+    },
+    {
+      "id": "neumorphism",
+      "name": "Neumorphism",
+      "file": "Neumorphism.md",
+      "category": "Modern",
+      "keywords": ["soft ui", "neumorphic", "skeuomorphic", "soft shadows", "embossed"],
+      "vibe": "Soft UI, skeuomorphic",
+      "bestFor": ["Mobile apps", "Smart home interfaces", "Modern UIs"]
+    },
+    {
+      "id": "newsprint",
+      "name": "Newsprint",
+      "file": "Newsprint.md",
+      "category": "Editorial",
+      "keywords": ["newspaper", "editorial", "journalism", "print", "news"],
+      "vibe": "Newspaper-inspired",
+      "bestFor": ["News sites", "Magazines", "Publishing platforms"]
+    },
+    {
+      "id": "organic",
+      "name": "Organic",
+      "file": "Organic.md",
+      "category": "Organic",
+      "keywords": ["natural", "flowing", "organic", "curved", "fluid"],
+      "vibe": "Natural, flowing forms",
+      "bestFor": ["Wellness", "Natural products", "Holistic brands"]
+    },
+    {
+      "id": "playfulgeometric",
+      "name": "Playful Geometric",
+      "file": "PlayfulGeometric.md",
+      "category": "Creative",
+      "keywords": ["geometric", "shapes", "playful", "fun", "colorful geometry"],
+      "vibe": "Fun geometric shapes",
+      "bestFor": ["Kids products", "Creative tools", "Playful brands"]
+    },
+    {
+      "id": "professional",
+      "name": "Professional",
+      "file": "Professional.md",
+      "category": "Professional",
+      "keywords": ["professional", "business", "clean", "trustworthy", "corporate"],
+      "vibe": "Clean, business-focused",
+      "bestFor": ["Corporate sites", "Professional services", "B2B platforms"]
+    },
+    {
+      "id": "retro",
+      "name": "Retro",
+      "file": "Retro.md",
+      "category": "Nostalgic",
+      "keywords": ["vintage", "retro", "nostalgic", "old-school", "classic"],
+      "vibe": "Vintage, nostalgic",
+      "bestFor": ["Retro brands", "Gaming", "Vintage shops"]
+    },
+    {
+      "id": "saas",
+      "name": "SaaS",
+      "file": "Saas.md",
+      "category": "Modern",
+      "keywords": ["saas", "startup", "modern", "clean", "professional saas"],
+      "vibe": "Modern SaaS aesthetic",
+      "bestFor": ["SaaS products", "Startups", "Web apps"]
+    },
+    {
+      "id": "sketch",
+      "name": "Sketch",
+      "file": "Sketch.md",
+      "category": "Creative",
+      "keywords": ["hand-drawn", "sketch", "artistic", "doodle", "illustrated"],
+      "vibe": "Hand-drawn, artistic",
+      "bestFor": ["Creative portfolios", "Artistic brands", "Unique sites"]
+    },
+    {
+      "id": "swiss",
+      "name": "Swiss",
+      "file": "Swiss.md",
+      "category": "Minimal",
+      "keywords": ["swiss", "international typographic", "grid", "minimal", "structured"],
+      "vibe": "International Typographic Style",
+      "bestFor": ["Design studios", "Portfolios", "Minimal brands"]
+    },
+    {
+      "id": "terminalcli",
+      "name": "Terminal CLI",
+      "file": "TerminalCLI.md",
+      "category": "Tech",
+      "keywords": ["terminal", "cli", "command line", "developer", "monospace", "hacker"],
+      "vibe": "Command-line interface aesthetic",
+      "bestFor": ["Developer tools", "Tech products", "CLI apps"]
+    },
+    {
+      "id": "vaporwave",
+      "name": "Vaporwave",
+      "file": "Vaporwave.md",
+      "category": "Nostalgic",
+      "keywords": ["vaporwave", "80s", "90s", "retro-futuristic", "nostalgic", "aesthetic"],
+      "vibe": "80s/90s aesthetic, nostalgic",
+      "bestFor": ["Creative projects", "Music platforms", "Retro brands"]
+    },
+    {
+      "id": "web3",
+      "name": "Web3",
+      "file": "Web3.md",
+      "category": "Tech",
+      "keywords": ["web3", "crypto", "blockchain", "decentralized", "NFT", "defi"],
+      "vibe": "Decentralized, crypto-inspired",
+      "bestFor": ["Crypto platforms", "NFT marketplaces", "Web3 apps"]
+    }
+  ],
+  "categories": {
+    "Modern": ["Claymorphism", "Material", "Modern Dark", "Neumorphism", "SaaS"],
+    "Minimal": ["Bauhaus", "Flat Design", "Minimal Dark", "Monochrome", "Swiss"],
+    "Creative": ["Bold Typography", "Maximalism", "Neo-brutalism", "Playful Geometric", "Sketch"],
+    "Professional": ["Enterprise", "Professional"],
+    "Elegant": ["Academia", "Art Deco", "Luxury"],
+    "Organic": ["Botanical", "Organic"],
+    "Futuristic": ["Cyberpunk"],
+    "Tech": ["Terminal CLI", "Web3"],
+    "Nostalgic": ["Retro", "Vaporwave"],
+    "Editorial": ["Newsprint"],
+    "Dynamic": ["Kinetic"],
+    "Raw": ["Industrial"]
+  },
+  "mappings": {
+    "userIntentToStyle": {
+      "modern": ["moderndark", "saas", "material"],
+      "minimal": ["swiss", "flatdesign", "monochrome"],
+      "professional": ["professional", "enterprise"],
+      "creative": ["neobrutalism", "boldtypography", "maximalism"],
+      "dark": ["moderndark", "minimaldrak", "cyberpunk"],
+      "luxury": ["luxury", "artdeco"],
+      "tech": ["terminalcli", "moderndark", "web3"],
+      "nature": ["botanical", "organic"],
+      "bold": ["neobrutalism", "boldtypography"],
+      "clean": ["swiss", "flatdesign", "professional"],
+      "corporate": ["enterprise", "professional"],
+      "futuristic": ["cyberpunk", "web3"],
+      "retro": ["retro", "vaporwave"],
+      "playful": ["playfulgeometric", "claymorphism"],
+      "elegant": ["luxury", "academia", "artdeco"]
+    }
+  },
+  "recommendations": {
+    "saas": ["moderndark", "saas", "professional"],
+    "ecommerce": ["luxury", "professional", "moderndark"],
+    "portfolio": ["swiss", "neobrutalism", "sketch"],
+    "blog": ["newsprint", "swiss", "minimaldrak"],
+    "dashboard": ["moderndark", "material", "enterprise"],
+    "landingPage": ["moderndark", "neobrutalism", "saas"],
+    "mobileApp": ["material", "neumorphism", "flatdesign"],
+    "developerTool": ["terminalcli", "moderndark", "minimaldrak"],
+    "crypto": ["web3", "cyberpunk"],
+    "creative": ["neobrutalism", "maximalism", "sketch"],
+    "wellness": ["botanical", "organic", "claymorphism"],
+    "corporate": ["enterprise", "professional"],
+    "education": ["academia", "professional"]
+  }
+}
