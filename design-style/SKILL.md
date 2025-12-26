@@ -31,6 +31,8 @@ The following design systems are available in the `prompts/` directory:
 - **Cyberpunk** - Futuristic, neon, high-tech
 - **Enterprise** - Professional, corporate, scalable
 - **FlatDesign** - Clean, minimal, 2D
+- **Fluent2** - Microsoft Fluent 2 Design System
+- **HumanistLiterary** - Warm, literary, conversational (Claude aesthetic)
 - **Industrial** - Raw, mechanical, utilitarian
 - **Kinetic** - Dynamic, motion-focused
 - **Luxury** - Premium, elegant, sophisticated

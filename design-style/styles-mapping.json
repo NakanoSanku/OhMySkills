@@ -2,8 +2,8 @@
   "metadata": {
     "version": "1.0.0",
     "description": "Design style mapping for Claude Code design-style skill",
-    "totalStyles": 30,
-    "lastUpdated": "2025-12-25"
+    "totalStyles": 32,
+    "lastUpdated": "2025-12-26"
   },
   "styles": [
     {
@@ -86,6 +86,15 @@
       "keywords": ["flat", "2d", "minimal", "clean", "simple", "modern"],
       "vibe": "Clean, minimal, 2D",
       "bestFor": ["Mobile apps", "Dashboards", "Simple interfaces"]
+    },
+    {
+      "id": "fluent2",
+      "name": "Fluent 2",
+      "file": "Fluent2.md",
+      "category": "Modern",
+      "keywords": ["fluent", "microsoft", "modern", "professional", "corporate", "accessibility", "mica", "acrylic", "windows"],
+      "vibe": "Microsoft Fluent 2 Design System",
+      "bestFor": ["Enterprise apps", "Windows applications", "Microsoft ecosystem"]
     },
     {
       "id": "industrial",
@@ -223,6 +232,15 @@
       "bestFor": ["Retro brands", "Gaming", "Vintage shops"]
     },
     {
+      "id": "humanistliterary",
+      "name": "Humanist Literary",
+      "file": "HumanistLiterary.md",
+      "category": "Elegant",
+      "keywords": ["humanist", "literary", "warm", "calm", "serif", "editorial", "claude", "conversational", "paper"],
+      "vibe": "Quiet intelligence, organic warmth",
+      "bestFor": ["Content platforms", "Documentation sites", "Conversational AI", "Blogs"]
+    },
+    {
       "id": "saas",
       "name": "SaaS",
       "file": "Saas.md",
@@ -278,11 +296,11 @@
     }
   ],
   "categories": {
-    "Modern": ["Claymorphism", "Material", "Modern Dark", "Neumorphism", "SaaS"],
+    "Modern": ["Claymorphism", "Fluent 2", "Material", "Modern Dark", "Neumorphism", "SaaS"],
     "Minimal": ["Bauhaus", "Flat Design", "Minimal Dark", "Monochrome", "Swiss"],
     "Creative": ["Bold Typography", "Maximalism", "Neo-brutalism", "Playful Geometric", "Sketch"],
     "Professional": ["Enterprise", "Professional"],
-    "Elegant": ["Academia", "Art Deco", "Luxury"],
+    "Elegant": ["Academia", "Art Deco", "Humanist Literary", "Luxury"],
     "Organic": ["Botanical", "Organic"],
     "Futuristic": ["Cyberpunk"],
     "Tech": ["Terminal CLI", "Web3"],
@@ -293,9 +311,9 @@
   },
   "mappings": {
     "userIntentToStyle": {
-      "modern": ["moderndark", "saas", "material"],
+      "modern": ["moderndark", "saas", "material", "fluent2"],
       "minimal": ["swiss", "flatdesign", "monochrome"],
-      "professional": ["professional", "enterprise"],
+      "professional": ["professional", "enterprise", "fluent2"],
       "creative": ["neobrutalism", "boldtypography", "maximalism"],
       "dark": ["moderndark", "minimaldrak", "cyberpunk"],
       "luxury": ["luxury", "artdeco"],
@@ -303,26 +321,30 @@
       "nature": ["botanical", "organic"],
       "bold": ["neobrutalism", "boldtypography"],
       "clean": ["swiss", "flatdesign", "professional"],
-      "corporate": ["enterprise", "professional"],
+      "corporate": ["enterprise", "professional", "fluent2"],
       "futuristic": ["cyberpunk", "web3"],
       "retro": ["retro", "vaporwave"],
       "playful": ["playfulgeometric", "claymorphism"],
-      "elegant": ["luxury", "academia", "artdeco"]
+      "elegant": ["luxury", "academia", "artdeco", "humanistliterary"],
+      "warm": ["humanistliterary", "botanical"],
+      "conversational": ["humanistliterary"]
     }
   },
   "recommendations": {
     "saas": ["moderndark", "saas", "professional"],
     "ecommerce": ["luxury", "professional", "moderndark"],
     "portfolio": ["swiss", "neobrutalism", "sketch"],
-    "blog": ["newsprint", "swiss", "minimaldrak"],
-    "dashboard": ["moderndark", "material", "enterprise"],
+    "blog": ["newsprint", "swiss", "minimaldrak", "humanistliterary"],
+    "dashboard": ["moderndark", "material", "enterprise", "fluent2"],
     "landingPage": ["moderndark", "neobrutalism", "saas"],
     "mobileApp": ["material", "neumorphism", "flatdesign"],
     "developerTool": ["terminalcli", "moderndark", "minimaldrak"],
     "crypto": ["web3", "cyberpunk"],
     "creative": ["neobrutalism", "maximalism", "sketch"],
     "wellness": ["botanical", "organic", "claymorphism"],
-    "corporate": ["enterprise", "professional"],
-    "education": ["academia", "professional"]
+    "corporate": ["enterprise", "professional", "fluent2"],
+    "education": ["academia", "professional"],
+    "documentation": ["humanistliterary", "professional", "swiss"],
+    "conversationalAI": ["humanistliterary"]
   }
 }
