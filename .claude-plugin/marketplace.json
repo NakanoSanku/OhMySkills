@@ -11,7 +11,10 @@
       "name": "design-style",
       "description": "Automatically retrieves design system prompts to create visually distinctive, production-grade frontend code with 30+ specific design styles (Neo-brutalism, Modern Dark, Cyberpunk, Luxury, etc.)",
       "source": "./design-style",
-      "category": "Frontend Development"
+      "strict": false,
+      "skills": [
+        "./design-style"
+      ]
     }
   ]
 }
