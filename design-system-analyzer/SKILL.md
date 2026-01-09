@@ -6,18 +6,28 @@ description: Analyze any website's UI style using ChromeDevTools to extract prec
 
 Analyze websites via ChromeDevTools to extract deep CSS logic (keyframes, transitions, tokens) and generate comprehensive Design System System Prompts.
 
+## Critical Rules
+
+1. **MUST** output the final prompt using EXACTLY the structure in `references/design-system-template.md`
+2. **MUST** limit extraction data to prevent context overflow (see analysis-guide.md for limits)
+3. **MUST** fill ALL template placeholders with extracted or observed values
+4. **NEVER** skip sections - use "Not observed" if data unavailable
+
 ## Best Practice: Use Your Own Chrome
 
 For the best experience (no CAPTCHAs, shared login cookies), advise the user to run Chrome with:
 `chrome.exe --remote-debugging-port=9222`
 (See **[references/setup-guide.md](references/setup-guide.md)** for details)
 
-## Workflow
+---
 
-1. **Navigate & Verify** → Handle Cloudflare/Anti-bot checks
-2. **Deep Extraction** → Extract CSSOM data (Animations, Interactions, Tokens)
-3. **Visual Capture** → Screenshots for verification only
-4. **Synthesize** → Generate System Prompt from raw CSS data
+## Workflow Overview
+
+```
+[1. Navigate] → [2. Anti-Bot Check] → [3. Deep Extraction] → [4. Screenshot] → [5. Synthesize to Template]
+```
+
+---
 
 ## Step 1: Navigate & Anti-Bot Check
 
@@ -25,7 +35,7 @@ For the best experience (no CAPTCHAs, shared login cookies), advise the user to 
 mcp__chrome-devtools__navigate_page (url: "<target-url>")
 ```
 
-**CRITICAL**: After navigation, immediately check for bot challenges.
+**Immediately check for bot challenges:**
 
 ```javascript
 () => {
@@ -39,60 +49,83 @@ mcp__chrome-devtools__navigate_page (url: "<target-url>")
 ```
 
 **IF CHALLENGE_DETECTED**:
+1. **PAUSE** all actions.
+2. Tell the user: "Bot protection detected. Please manually solve the CAPTCHA in the browser, then confirm here."
+3. Wait for user confirmation before proceeding.
 
-1. **PAUSE**.
-2. Tell the user: "Cloudflare/Bot protection detected. For a smoother experience, please try running your own Chrome with remote debugging enabled (see setup-guide.md)."
-3. Ask user to manually solve the CAPTCHA in the currently open browser window.
-4. Only proceed after user confirmation.
+---
 
 ## Step 2: Deep CSS Extraction
 
-Use scripts from `references/analysis-guide.md` to extract the "Source of Truth".
+Run the extraction scripts from `references/analysis-guide.md` **in order**:
 
-**1. Extract Animations & Keyframes**
-(See "Deep Animation & Transition Extractor" in analysis-guide.md)
+| Order | Script | Purpose | Max Items |
+|-------|--------|---------|-----------|
+| 1 | CSS Variables & Tokens | Colors, spacing, typography variables | 50 tokens |
+| 2 | Animation & Keyframes | @keyframes, animation usage, transitions | 10 KF, 15 trans |
+| 3 | Interaction States | :hover, :focus, :active rules | 15 rules |
+| 4 | Typography | Font stacks from key elements | 7 elements |
+| 5 | Layout & Spacing | Border radius, gaps, shadows | 5 each |
+| 6 | Tech Stack | Framework detection | - |
 
-**2. Extract Interaction States (:hover/:focus)**
-(See "Interaction State Extractor" in analysis-guide.md)
+**IMPORTANT**: Each script has built-in limits. Do NOT modify to extract more data.
 
-**3. Extract Design Tokens (Variables)**
-(See "Variable & Token Extractor" in analysis-guide.md)
+---
 
-## Step 3: Visual Context & Tech Stack
+## Step 3: Visual Verification
 
-**Fingerprint the Stack**:
-
-```javascript
-() => {
-  return {
-    isTailwind: !!document.querySelector('.text-center'),
-    isReact: !!Object.keys(window).find(k => k.startsWith('__react')),
-    isVue: !!document.querySelector('[data-v-app]')
-  };
-}
-```
-
-**Take Screenshots**:
+Take a single viewport screenshot for vibe verification:
 
 ```
 mcp__chrome-devtools__take_screenshot (_: true)
-mcp__chrome-devtools__take_screenshot (_: true, fullPage: true)
 ```
 
-## Step 4: Analysis & Synthesis
+Do NOT take full-page screenshots unless specifically needed - they consume significant context.
 
-Synthesize the extracted data into the Design System Template.
+---
 
-| Data Source                     | Template Section                                 |
-| ------------------------------- | ------------------------------------------------ |
-| **CSS Variables**         | `Design Token System` (Colors/Spacing)         |
-| **Keyframes/Transitions** | `Animation & Motion` (Exact curves/durations)  |
-| **:hover/:focus Rules**   | `Interactive Elements` & `Component Styling` |
-| **Computed Styles**       | `Typography` & `Layout Principles`           |
-| **Visual Observations**   | `Vibe`, `Signature Elements`                 |
+## Step 4: Synthesize to Template
+
+**MANDATORY**: Generate output using EXACTLY the template structure from `references/design-system-template.md`.
+
+### Template Mapping Table
+
+| Extracted Data | Template Section | Notes |
+|----------------|------------------|-------|
+| `tokens.colors` | `Design Token System > Colors` | Format as table |
+| `tokens.spacing` | `Spacing, Radius & Borders` | Include radius values |
+| `tokens.typography` | `Typography` | Include font stacks |
+| Typography script | `Typography > Font Stacks, Type Scale` | Computed styles |
+| `keyframes` | `Animation & Motion > Key Animations` | Full keyframe definitions |
+| `animationUsage` | `Animation & Motion > Timing` | Duration, easing |
+| `transitions` | `Animation & Motion > Timing` | Common patterns |
+| `interactions` | `Component Styling > State Transitions` | Hover/focus effects |
+| Layout sampler | `Layout Principles` | Spacing system |
+| Tech stack | `Implementation Notes` | Tailwind/CSS notes |
+| Visual observation | `Design Philosophy > Vibe` | Subjective feel |
+
+### Output Format Checklist
+
+Before outputting, verify ALL these sections are present:
+
+- [ ] `<role>` block (copy exactly from template)
+- [ ] `<design-system>` wrapper
+- [ ] `## Design Philosophy` with Core Principles, Vibe, Historical Context
+- [ ] `## Design Token System` with Colors table, Typography, Spacing
+- [ ] `## Component Styling Principles` with Buttons, Cards, Form Inputs
+- [ ] `## Layout Principles` with Spacing System, Grid, Responsive
+- [ ] `## The "Signature" Factor` with 3 mandatory elements
+- [ ] `## Animation & Motion` with Philosophy, Timing, Key Animations
+- [ ] `## Accessibility Constraints`
+- [ ] `## Anti-Patterns` with Visual and Interaction no-nos
+- [ ] `## Implementation Notes` with tech-specific guidance
+- [ ] `## Aesthetic Checklist` with 4 verification items
+- [ ] Closing `</design-system>`
+
+---
 
 ## Resources
 
-- **[references/design-system-template.md](references/design-system-template.md)**: The output template
-- **[references/analysis-guide.md](references/analysis-guide.md)**: Deep extraction scripts
+- **[references/design-system-template.md](references/design-system-template.md)**: The REQUIRED output template
+- **[references/analysis-guide.md](references/analysis-guide.md)**: Deep extraction scripts with context limits
 - **[references/setup-guide.md](references/setup-guide.md)**: Guide for reusing user's Chrome

@@ -1,4 +1,13 @@
-# UI Analysis Guide (V2 - Deep Extraction)
+# UI Analysis Guide (V3 - Context-Optimized Deep Extraction)
+
+## Critical: Context Management
+
+To prevent context overflow, ALL extraction scripts must:
+1. Limit array results to essential items only
+2. Aggregate similar patterns instead of listing each instance
+3. Return summarized data, not raw dumps
+
+---
 
 ## Analysis Workflow
 
@@ -12,145 +21,320 @@
 
 ### Step 2: Deep Extraction (The "Source of Truth")
 
-Do not rely solely on screenshots. Use these scripts to extract the raw CSS logic.
+Run these scripts **in sequence** using `mcp__chrome-devtools__evaluate_script`.
 
-#### A. Deep Animation & Transition Extractor
-This script traverses CSS stylesheets to find `@keyframes` and classes with transitions.
+#### A. CSS Variables & Design Tokens (Run First)
+
+Extracts CSS custom properties with smart categorization. Limited to 50 most important tokens.
 
 ```javascript
 () => {
-  const animations = {
-    transitions: [],
-    keyframes: {}
+  const tokens = { colors: {}, spacing: {}, typography: {}, other: {} };
+  let count = 0;
+  const MAX_TOKENS = 50;
+
+  const categorize = (name, value) => {
+    const v = value.toLowerCase();
+    if (v.includes('#') || v.includes('rgb') || v.includes('hsl') || name.includes('color') || name.includes('bg')) {
+      return 'colors';
+    }
+    if (name.includes('font') || name.includes('text') || name.includes('line-height')) {
+      return 'typography';
+    }
+    if (name.includes('space') || name.includes('gap') || name.includes('margin') || name.includes('padding') || name.includes('radius')) {
+      return 'spacing';
+    }
+    return 'other';
   };
 
   try {
-    // Helper to serialize CSS rules
-    const parseRule = (rule) => {
-      if (rule.type === 7) { // CSSKeyframesRule
-        const frames = {};
-        Array.from(rule.cssRules).forEach(r => {
-           frames[r.keyText] = r.style.cssText;
-        });
-        animations.keyframes[rule.name] = frames;
-      }
-      else if (rule.style) {
-        // Check for transitions
-        if (rule.style.transition && rule.style.transition !== 'all 0s ease 0s') {
-          animations.transitions.push({
-            selector: rule.selectorText,
-            transition: rule.style.transition
-          });
-        }
-        // Check for animation usage
-        if (rule.style.animationName) {
-           // We already capture the keyframe definition above, now we capture usage
-        }
-      }
-    };
-
-    // Traverse all loaded stylesheets
     Array.from(document.styleSheets).forEach(sheet => {
+      if (count >= MAX_TOKENS) return;
       try {
-        Array.from(sheet.cssRules).forEach(parseRule);
-      } catch (e) {
-        // CORS restriction on some cross-origin sheets
-        console.log('Skipping cross-origin sheet');
-      }
+        Array.from(sheet.cssRules).forEach(rule => {
+          if (count >= MAX_TOKENS) return;
+          if (rule.selectorText === ':root' || rule.selectorText === 'html' || rule.selectorText === ':root, :host') {
+            for (let i = 0; i < rule.style.length && count < MAX_TOKENS; i++) {
+              const prop = rule.style[i];
+              if (prop.startsWith('--')) {
+                const val = rule.style.getPropertyValue(prop).trim();
+                const cat = categorize(prop, val);
+                tokens[cat][prop] = val;
+                count++;
+              }
+            }
+          }
+        });
+      } catch(e) {}
     });
+  } catch(e) {}
 
-  } catch (e) { return { error: e.message }; }
-
-  return animations;
+  return { tokenCount: count, tokens };
 }
 ```
 
-#### B. Interaction State Extractor (:hover / :focus)
-Extracts pseudo-states directly from CSS rules instead of trying to simulate mouse events.
+#### B. Animation & Keyframes Extractor (Enhanced)
+
+Extracts **all animation-related CSS** including keyframes, animation properties, and transitions.
+Limited to 10 keyframes and 15 transitions.
+
+```javascript
+() => {
+  const result = {
+    keyframes: {},
+    animationUsage: [],
+    transitions: []
+  };
+  let kfCount = 0, transCount = 0;
+  const MAX_KF = 10, MAX_TRANS = 15;
+  const seenSelectors = new Set();
+
+  const processRules = (rules) => {
+    Array.from(rules).forEach(rule => {
+      // Handle @keyframes
+      if (rule.type === CSSRule.KEYFRAMES_RULE && kfCount < MAX_KF) {
+        const frames = {};
+        Array.from(rule.cssRules).forEach(frame => {
+          frames[frame.keyText] = frame.style.cssText;
+        });
+        result.keyframes[rule.name] = frames;
+        kfCount++;
+      }
+      // Handle @media rules (nested)
+      else if (rule.type === CSSRule.MEDIA_RULE) {
+        processRules(rule.cssRules);
+      }
+      // Handle style rules
+      else if (rule.style) {
+        const sel = rule.selectorText || '';
+        // Animation usage
+        if (rule.style.animation || rule.style.animationName) {
+          const anim = rule.style.animation || rule.style.animationName;
+          if (!seenSelectors.has(sel + ':anim')) {
+            result.animationUsage.push({
+              selector: sel,
+              animation: anim,
+              duration: rule.style.animationDuration || '',
+              timing: rule.style.animationTimingFunction || '',
+              delay: rule.style.animationDelay || ''
+            });
+            seenSelectors.add(sel + ':anim');
+          }
+        }
+        // Transitions
+        const trans = rule.style.transition;
+        if (trans && trans !== 'none' && trans !== 'all 0s ease 0s' && transCount < MAX_TRANS) {
+          if (!seenSelectors.has(sel + ':trans')) {
+            result.transitions.push({
+              selector: sel,
+              transition: trans
+            });
+            seenSelectors.add(sel + ':trans');
+            transCount++;
+          }
+        }
+      }
+    });
+  };
+
+  try {
+    Array.from(document.styleSheets).forEach(sheet => {
+      try { processRules(sheet.cssRules); } catch(e) {}
+    });
+  } catch(e) {}
+
+  // Also check inline styles on animated elements
+  document.querySelectorAll('[style*="animation"], [style*="transition"]').forEach(el => {
+    const s = el.style;
+    if (s.animation && result.animationUsage.length < 20) {
+      result.animationUsage.push({
+        selector: el.tagName + (el.className ? '.' + el.className.split(' ')[0] : ''),
+        animation: s.animation,
+        inline: true
+      });
+    }
+  });
+
+  return {
+    keyframeCount: Object.keys(result.keyframes).length,
+    transitionCount: result.transitions.length,
+    animationUsageCount: result.animationUsage.length,
+    data: result
+  };
+}
+```
+
+#### C. Interaction State Extractor (:hover / :focus / :active)
+
+Extracts pseudo-state styles. Limited to 15 most relevant interactions.
 
 ```javascript
 () => {
   const interactions = [];
+  const MAX = 15;
+  const seenBase = new Set();
+
+  const prioritySelectors = ['button', 'a', 'input', 'nav', 'card', 'btn', 'link'];
+
+  const getPriority = (sel) => {
+    const s = sel.toLowerCase();
+    for (let i = 0; i < prioritySelectors.length; i++) {
+      if (s.includes(prioritySelectors[i])) return i;
+    }
+    return 99;
+  };
 
   try {
+    const allInteractions = [];
     Array.from(document.styleSheets).forEach(sheet => {
       try {
         Array.from(sheet.cssRules).forEach(rule => {
-          if (rule.selectorText && (rule.selectorText.includes(':hover') || rule.selectorText.includes(':focus'))) {
-            // Filter only relevant interaction changes (color, background, transform, shadow)
+          const sel = rule.selectorText || '';
+          if (sel.includes(':hover') || sel.includes(':focus') || sel.includes(':active')) {
             const style = rule.style;
-            if (style.color || style.backgroundColor || style.transform || style.boxShadow || style.borderColor) {
-               interactions.push({
-                 selector: rule.selectorText,
-                 changes: style.cssText
-               });
+            const changes = [];
+            // Only capture visual changes
+            ['color', 'backgroundColor', 'background', 'transform', 'boxShadow', 'borderColor', 'opacity', 'scale', 'filter'].forEach(prop => {
+              const val = style[prop] || style.getPropertyValue(prop.replace(/[A-Z]/g, m => '-' + m.toLowerCase()));
+              if (val) changes.push(`${prop}: ${val}`);
+            });
+            if (changes.length > 0) {
+              const base = sel.replace(/:hover|:focus|:active/g, '');
+              if (!seenBase.has(base)) {
+                allInteractions.push({
+                  selector: sel,
+                  changes: changes.join('; '),
+                  priority: getPriority(sel)
+                });
+                seenBase.add(base);
+              }
             }
           }
         });
-      } catch (e) {}
+      } catch(e) {}
     });
-  } catch (e) {}
-
-  // Return top 20 most relevant interactions to save context
-  return interactions.slice(0, 20);
-}
-```
-
-#### C. Variable & Token Extractor (Enhanced)
-Extracts all CSS variables defined on `:root` to find the defined palette.
-
-```javascript
-() => {
-  const tokens = {};
-  const computed = getComputedStyle(document.documentElement);
-
-  // 1. Try to find CSS variables by iterating common patterns if strict iteration fails
-  // Note: Standard API doesn't let you iterate all defined vars easily on computed style
-  // so we fallback to reading the style attribute of :root in stylesheets
-
-  try {
-     Array.from(document.styleSheets).forEach(sheet => {
-       try {
-         Array.from(sheet.cssRules).forEach(rule => {
-           if (rule.selectorText === ':root' || rule.selectorText === 'html') {
-             for (let i = 0; i < rule.style.length; i++) {
-               const prop = rule.style[i];
-               if (prop.startsWith('--')) {
-                 tokens[prop] = rule.style.getPropertyValue(prop).trim();
-               }
-             }
-           }
-         });
-       } catch(e) {}
-     });
+    // Sort by priority and take top MAX
+    allInteractions.sort((a, b) => a.priority - b.priority);
+    interactions.push(...allInteractions.slice(0, MAX));
   } catch(e) {}
 
-  return tokens;
+  return { count: interactions.length, interactions };
 }
 ```
 
-### Step 3: Visual Verification (Snapshots)
+#### D. Typography Extractor
 
-Take screenshots ONLY to verify the layout structure and vibe, not for extracting exact pixel values (since we now have the CSS).
-
-### Step 4: Tech Stack Fingerprinting
-
-Check for global variables to identify the underlying tech (which informs the implementation guide).
+Extracts font information from key elements.
 
 ```javascript
 () => {
+  const typography = {};
+  const elements = {
+    h1: document.querySelector('h1'),
+    h2: document.querySelector('h2'),
+    h3: document.querySelector('h3'),
+    body: document.body,
+    p: document.querySelector('p'),
+    button: document.querySelector('button'),
+    a: document.querySelector('a')
+  };
+
+  Object.entries(elements).forEach(([name, el]) => {
+    if (el) {
+      const cs = getComputedStyle(el);
+      typography[name] = {
+        fontFamily: cs.fontFamily.split(',')[0].replace(/['"]/g, ''),
+        fontSize: cs.fontSize,
+        fontWeight: cs.fontWeight,
+        lineHeight: cs.lineHeight,
+        letterSpacing: cs.letterSpacing !== 'normal' ? cs.letterSpacing : null
+      };
+    }
+  });
+
+  return typography;
+}
+```
+
+#### E. Layout & Spacing Sampler
+
+Extracts common spacing and layout patterns.
+
+```javascript
+() => {
+  const layout = {
+    borderRadius: new Set(),
+    gaps: new Set(),
+    shadows: new Set()
+  };
+
+  // Sample key container elements
+  const containers = document.querySelectorAll('main, section, article, .container, .card, [class*="card"], [class*="container"]');
+  const buttons = document.querySelectorAll('button, [class*="btn"], a[class*="button"]');
+
+  const addVal = (set, val, max = 5) => {
+    if (val && val !== '0px' && val !== 'none' && set.size < max) set.add(val);
+  };
+
+  containers.forEach(el => {
+    const cs = getComputedStyle(el);
+    addVal(layout.borderRadius, cs.borderRadius);
+    addVal(layout.gaps, cs.gap);
+    addVal(layout.shadows, cs.boxShadow);
+  });
+
+  buttons.forEach(el => {
+    const cs = getComputedStyle(el);
+    addVal(layout.borderRadius, cs.borderRadius);
+  });
+
   return {
-    isTailwind: !!document.querySelector('.text-center') || !!document.querySelector('.flex'),
-    isBootstrap: !!document.querySelector('.btn-primary'),
-    isReact: !!Object.keys(window).find(k => k.startsWith('__react')),
-    isVue: !!document.querySelector('[data-v-app]'),
-    isNext: !!window.__NEXT_DATA__,
-    isFramerMotion: !!document.querySelector('[style*="transform"]') // loose check
+    borderRadius: [...layout.borderRadius],
+    gaps: [...layout.gaps],
+    shadows: [...layout.shadows].slice(0, 3) // Shadows can be verbose
   };
 }
 ```
 
+### Step 3: Tech Stack Fingerprinting
+
+```javascript
+() => {
+  const stack = [];
+  if (document.querySelector('[class*="tw-"], .flex, .grid, .text-center')) stack.push('Tailwind CSS');
+  if (document.querySelector('.btn-primary, .container-fluid')) stack.push('Bootstrap');
+  if (Object.keys(window).find(k => k.startsWith('__react'))) stack.push('React');
+  if (document.querySelector('[data-v-app], [data-v]')) stack.push('Vue');
+  if (window.__NEXT_DATA__) stack.push('Next.js');
+  if (window.__NUXT__) stack.push('Nuxt');
+  if (document.querySelector('[data-framer-appear-id]')) stack.push('Framer Motion');
+  if (document.querySelector('[class*="chakra"]')) stack.push('Chakra UI');
+  if (document.querySelector('[class*="mantine"]')) stack.push('Mantine');
+  if (document.querySelector('[class*="ant-"]')) stack.push('Ant Design');
+  if (document.querySelector('[class*="MuiBox"], [class*="css-"]')) stack.push('MUI/Emotion');
+  return stack.length > 0 ? stack : ['Unknown/Custom CSS'];
+}
+```
+
+### Step 4: Visual Verification
+
+Take screenshots ONLY to verify layout and capture the "vibe" - exact values come from extracted CSS.
+
+```
+mcp__chrome-devtools__take_screenshot (_: true)
+```
+
+---
+
 ## Output Mapping
 
-Map extracted `keyframes` to the `Animation & Motion` section of the template.
-Map extracted `:hover` rules to the `Interactive Elements` section.
+| Extracted Data | Template Section |
+|----------------|------------------|
+| CSS Variables (colors) | Design Token System > Colors |
+| CSS Variables (spacing) | Spacing, Radius & Borders |
+| Typography data | Typography |
+| Keyframes + animationUsage | Animation & Motion > Key Animations |
+| Transitions | Animation & Motion > Timing |
+| :hover/:focus rules | Interactive Elements, Component Styling |
+| Layout sampler | Layout Principles |
+| Tech stack | Implementation Notes |
