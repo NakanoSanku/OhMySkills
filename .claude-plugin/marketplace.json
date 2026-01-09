@@ -15,6 +15,15 @@
       "skills": [
         "./design-style"
       ]
+    },
+    {
+      "name": "design-system-analyzer",
+      "description": "Analyze any website's UI style using ChromeDevTools to extract precise CSS tokens, animations, and interaction states. Generates comprehensive Design System Prompts from live websites.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./design-system-analyzer"
+      ]
     }
   ]
 }

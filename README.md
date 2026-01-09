@@ -14,6 +14,35 @@ Automatically retrieves design system prompts to create visually distinctive, pr
 
 > **Note**: Design system prompts are sourced from [designprompts.dev](https://designprompts.dev) - a curated collection of high-quality design system templates.
 
+### 🔍 Design System Analyzer Skill
+
+Analyze any website's UI style using ChromeDevTools to extract precise CSS tokens, animations, and interaction states. Generates comprehensive Design System Prompts from live websites.
+
+**Key Features:**
+
+- Deep CSS extraction (keyframes, transitions, tokens)
+- Interaction state analysis (:hover, :focus, etc.)
+- Design token extraction (CSS variables, colors, spacing)
+- Tech stack fingerprinting (React, Vue, Tailwind detection)
+- Anti-bot/Cloudflare handling with user guidance
+- Generates complete Design System Prompts
+
+**Example Usage:**
+
+```
+"Analyze this site: https://example.com"
+"Extract UI style from https://dribbble.com"
+"Create design system from this URL"
+"Learn visual style from https://stripe.com"
+```
+
+**Requirements:**
+
+- Chrome DevTools MCP server
+- Recommended: Run Chrome with `--remote-debugging-port=9222` for best experience
+
+[View Full Documentation →](./design-system-analyzer/SKILL.md)
+
 **Design Systems Include:**
 
 - **Modern**: Modern Dark, SaaS, Material, Claymorphism, Neumorphism
@@ -127,7 +156,6 @@ Claude: [Applies Neo-brutalism design patterns and tokens]
 ```
 OhMySkills/
 ├── .claude-plugin/
-│   ├── plugin.json          # Plugin metadata
 │   └── marketplace.json     # Marketplace configuration
 ├── design-style/            # Design Style Skill
 │   ├── SKILL.md            # Skill definition
@@ -135,6 +163,12 @@ OhMySkills/
 │   ├── styles-mapping.json # Style metadata
 │   ├── reference.md        # Design reference
 │   └── scripts/            # Utility scripts
+├── design-system-analyzer/  # Design System Analyzer Skill
+│   ├── SKILL.md            # Skill definition
+│   └── references/         # Analysis guides and templates
+│       ├── analysis-guide.md
+│       ├── design-system-template.md
+│       └── setup-guide.md
 └── README.md               # This file
 ```
 
