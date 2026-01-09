@@ -34,8 +34,9 @@ Trigger phrases:
 1. **Navigate** - Opens target URL in Chrome DevTools
 2. **Anti-Bot Check** - Detects and handles bot protection
 3. **Deep Extraction** - Runs 6 extraction scripts with data limits
-4. **Screenshot** - Captures viewport for visual verification
-5. **Synthesize** - Generates System Prompt using template
+4. **Synthesize** - Generates System Prompt using template
+
+**Note**: Screenshots are intentionally disabled to prevent context overflow.
 
 ## Data Limits (Context Optimization)
 

@@ -24,8 +24,10 @@ For the best experience (no CAPTCHAs, shared login cookies), advise the user to 
 ## Workflow Overview
 
 ```
-[1. Navigate] → [2. Anti-Bot Check] → [3. Deep Extraction] → [4. Screenshot] → [5. Synthesize to Template]
+[1. Navigate] → [2. Anti-Bot Check] → [3. Deep Extraction] → [4. Synthesize to Template]
 ```
+
+**IMPORTANT**: Do NOT take screenshots. Screenshots consume excessive context and are unnecessary - all visual data is extracted from CSS.
 
 ---
 
@@ -72,19 +74,7 @@ Run the extraction scripts from `references/analysis-guide.md` **in order**:
 
 ---
 
-## Step 3: Visual Verification
-
-Take a single viewport screenshot for vibe verification:
-
-```
-mcp__chrome-devtools__take_screenshot (_: true)
-```
-
-Do NOT take full-page screenshots unless specifically needed - they consume significant context.
-
----
-
-## Step 4: Synthesize to Template
+## Step 3: Synthesize to Template
 
 **MANDATORY**: Generate output using EXACTLY the template structure from `references/design-system-template.md`.
 
@@ -102,7 +92,6 @@ Do NOT take full-page screenshots unless specifically needed - they consume sign
 | `interactions` | `Component Styling > State Transitions` | Hover/focus effects |
 | Layout sampler | `Layout Principles` | Spacing system |
 | Tech stack | `Implementation Notes` | Tailwind/CSS notes |
-| Visual observation | `Design Philosophy > Vibe` | Subjective feel |
 
 ### Output Format Checklist
 

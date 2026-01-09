@@ -316,14 +316,6 @@ Extracts common spacing and layout patterns.
 }
 ```
 
-### Step 4: Visual Verification
-
-Take screenshots ONLY to verify layout and capture the "vibe" - exact values come from extracted CSS.
-
-```
-mcp__chrome-devtools__take_screenshot (_: true)
-```
-
 ---
 
 ## Output Mapping
